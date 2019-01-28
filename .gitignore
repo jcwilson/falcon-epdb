@@ -1,0 +1,6 @@
+.tox/
+.venv/
+dist/
+docs/_build/
+falcon_epdb.egg-info/
+pip-wheel-metadata/

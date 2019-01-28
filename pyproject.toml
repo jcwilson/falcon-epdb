@@ -1,0 +1,44 @@
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry]
+name = "falcon-epdb"
+version = "0.1.0"
+description = ""
+authors = [
+    "Josh Wilson <josh.wilson@fivestars.com>"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Framework :: Falcon",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware"
+]
+
+[tool.poetry.dependencies]
+python = "~2.7 || ^3.4"
+epdb = "^0.15.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+pytest-mock = "^1.10"
+sphinx = "^1.8"
+sphinx_rtd_theme = "^0.4.2"
+
+[tool.poetry.extras]
+fernet = ["cryptography<=3.0.0"]
+jwt = ["PyJWT<=2.0.0"]
