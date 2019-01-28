@@ -1,5 +1,6 @@
 __version__ = '0.1.0'
 
+import json
 from abc import ABCMeta, abstractmethod
 from logging import getLogger
 
@@ -53,7 +54,7 @@ class EPDBServe(object):
 
         try:
             header_data = self.backend.get_header_data(req)
-            if header_data:
+            if header_data is not None:
                 serve_options = self.serve_options.copy()
                 serve_options.setdefault('port', header_data.get('port'))
 
@@ -73,11 +74,12 @@ class EPDBBackend(object):
     def decode_header_value(self, value):
         pass
 
-    def get_header_value(self, req):
+    def get_header_data(self, req):
         epdb_header = req.headers.get('X-EPDB')
         if epdb_header:
             logger.debug('Found epdb header')
-            return self.backend.validate_header_value(epdb_header)
+            header_value = self.decode_header_value(epdb_header)
+            return self.validate_header_value(header_value)
 
     def validate_header_value(self, value):
         if not isinstance(value, dict):
@@ -109,22 +111,28 @@ class FernetBackend(EPDBBackend):
         if scheme != 'Fernet':
             raise ValueError('Invalid X-EPDB value; scheme must be Fernet')
 
-        decrypted_bytes = self.fernet.decrypt(payload)
+        decrypted_bytes = self.fernet.decrypt(payload.encode())
         decrypted_string = decrypted_bytes.decode()
-        decrypted_value = json.loads(decrypted_string)
-        return self.validate_header_value(decrypted_value)
+        return json.loads(decrypted_string)
 
 
 class JWTBackend(EPDBBackend):
 
-    def __init__(self, secret):
+    def __init__(self, key):
         try:
             jwt
         except NameError:
             raise ImportError('Missing optional [jwt] dependency')
 
-        self.secret = secret
+        self.key = key
 
     def decode_header_value(self, epdb_header):
-        decrypted_value = jwt.decode(epdb_header, self.secret)
-        return self.validate_header_value(decrypted_value)
+        try:
+            scheme, payload = epdb_header.split(None, 1)
+        except ValueError:
+            raise ValueError('Invalid X-EPDB value; must have two tokens')
+
+        if scheme != 'JWT':
+            raise ValueError('Invalid X-EPDB value; scheme must be JWT')
+
+        return jwt.decode(payload.encode(), self.key, algorithms='HS256')

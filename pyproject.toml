@@ -10,7 +10,7 @@ authors = [
     "Josh Wilson <josh.wilson@fivestars.com>"
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
     "Framework :: Falcon",
     "Intended Audience :: Developers",
@@ -38,6 +38,9 @@ pytest = "^3.0"
 pytest-mock = "^1.10"
 sphinx = "^1.8"
 sphinx_rtd_theme = "^0.4.2"
+falcon = "^1.4"
+pytest-sugar = "^0.9.2"
+pytest-cov = "^2.6"
 
 [tool.poetry.extras]
 fernet = ["cryptography<=3.0.0"]

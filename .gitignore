@@ -1,6 +1,8 @@
+.coverage
 .tox/
 .venv/
 dist/
 docs/_build/
 falcon_epdb.egg-info/
+htmlcov/
 pip-wheel-metadata/
