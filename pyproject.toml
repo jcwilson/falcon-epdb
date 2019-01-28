@@ -32,6 +32,8 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "~2.7 || ^3.4"
 epdb = "^0.15.1"
+cryptography = {version = "^2.5",optional = true}
+PyJWT = {version = "^1.7",optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
@@ -43,5 +45,5 @@ pytest-sugar = "^0.9.2"
 pytest-cov = "^2.6"
 
 [tool.poetry.extras]
-fernet = ["cryptography<=3.0.0"]
-jwt = ["PyJWT<=2.0.0"]
+fernet = ["cryptography"]
+jwt = ["PyJWT"]
