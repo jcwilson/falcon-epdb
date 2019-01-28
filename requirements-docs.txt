@@ -1,0 +1,5 @@
+# Only update this when you add more poetry dependencies
+# Use "poetry show --no-dev --tree" and get the top-level requirements
+epdb<=1.0.0
+cryptography<=3.0.0
+PyJWT<=2.0.0

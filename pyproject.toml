@@ -34,6 +34,7 @@ python = "~2.7 || ^3.4"
 epdb = "^0.15.1"
 cryptography = {version = "^2.5",optional = true}
 PyJWT = {version = "^1.7",optional = true}
+# Update requirement-docs.txt when modifying this list
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
