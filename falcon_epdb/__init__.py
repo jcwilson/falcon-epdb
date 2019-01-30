@@ -24,6 +24,8 @@ logger = getLogger(__name__)
 
 class EPDBException(Exception):
     """Raised when an error occurs during the processing of an ``X-EPDB`` header."""
+    # pylint: disable=too-few-public-methods
+
 
 class EPDBServe(object):
     """A middleware to enable remote debuging via an `epdb`_ server.
@@ -61,7 +63,7 @@ class EPDBServe(object):
         self.exempt_methods = exempt_methods
         self.serve_options = serve_options
 
-    def process_request(self, req, resp):
+    def process_request(self, req, resp):  # pylint: disable=unused-argument
         """Check for a well-formed ``X-EPDB`` header and if present activate the `epdb`_ server.
 
         :param req: The Falcon request object
@@ -82,12 +84,12 @@ class EPDBServe(object):
                 serve_options = self.serve_options.copy()
                 serve_options.setdefault('port', header_data.get('port'))
 
-                logger.debug('Serving epdb with options: {}', serve_options)
+                logger.debug('Serving epdb with options: %s', serve_options)
                 epdb.serve(**serve_options)
         except EPDBException:
             # Probably got an invalid header value. Don't start the debugger.
             logger.exception('Attempted, but failed, to serve epdb')
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             logger.exception('Unexpected error when processing the X-EPDB header')
 
 
@@ -119,6 +121,7 @@ class EPDBBackend(object):
             logger.debug('Found epdb header')
             header_content = self.decode_header_value(epdb_header)
             return self.validate_header_content(header_content)
+        return None
 
     @abstractmethod
     def decode_header_value(self, epdb_header):
@@ -132,9 +135,9 @@ class EPDBBackend(object):
         This does not need to do any content validation, as that is handled in
         :meth:`validate_header_content`.
         """
-        pass
 
-    def validate_header_content(self, header_content):
+    @staticmethod
+    def validate_header_content(header_content):
         """Ensure that the decoded ``X-EPDB`` header content is well-formed.
 
         :param header_content: The decoded ``X-EPDB`` header content

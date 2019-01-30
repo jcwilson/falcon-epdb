@@ -45,6 +45,7 @@ falcon = "^1.4"
 pytest-sugar = "^0.9.2"
 pytest-cov = "^2.6"
 pydocstyle = "^3.0"
+flake8 = "^3.7"
 
 [tool.poetry.extras]
 fernet = ["cryptography"]
