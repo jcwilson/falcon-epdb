@@ -1,5 +1,19 @@
+import base64
 import json
 from falcon.testing import SimpleTestResource
+
+
+def test_base64_client(base64_client, mock_epdb_serve):
+    resource = SimpleTestResource(json={})
+    base64_client.app.add_route('/', resource)
+
+    header_value = base64.b64encode(json.dumps({'epdb': {}}).encode())
+    result = base64_client.simulate_get(headers={
+        'X-EPDB': 'Base64 {}'.format(header_value.decode())
+    })
+
+    assert mock_epdb_serve.called
+    assert mock_epdb_serve.called_once_with(port=9000)
 
 
 try:

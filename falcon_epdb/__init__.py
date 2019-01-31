@@ -2,6 +2,7 @@
 
 __version__ = '0.1.0'
 
+import base64
 import json
 from abc import ABCMeta, abstractmethod
 from logging import getLogger
@@ -45,10 +46,7 @@ class EPDBServe(object):
     A well-formed header has content simply of the form::
 
         {
-            "epdb": {
-                # optional
-                "port": <port value>
-            }
+            "epdb": {}
         }
 
     The encoding and encryption of this payload is determined by the :class:`EPDBBackend`
@@ -81,11 +79,8 @@ class EPDBServe(object):
         try:
             header_data = self.backend.get_header_data(req)
             if header_data is not None:
-                serve_options = self.serve_options.copy()
-                serve_options.setdefault('port', header_data.get('port'))
-
-                logger.debug('Serving epdb with options: %s', serve_options)
-                epdb.serve(**serve_options)
+                logger.debug('Serving epdb with options: %s', self.serve_options)
+                epdb.serve(**self.serve_options)
         except EPDBException:
             # Probably got an invalid header value. Don't start the debugger.
             logger.exception('Attempted, but failed, to serve epdb')
@@ -129,7 +124,7 @@ class EPDBBackend(object):
 
         :param epdb_header: The content of the ``X-EPDB`` header
         :type epdb_header: string
-        :returns: The decoded and decrypt header payload
+        :returns: The decoded and decrypted header payload
         :rtype: dictionary
 
         This does not need to do any content validation, as that is handled in
@@ -149,10 +144,7 @@ class EPDBBackend(object):
         :obj:`header_content` must be of the form::
 
             {
-                "epdb": {
-                    # optional
-                    "port": <port value>
-                }
+                "epdb": {}
             }
         """
         if not isinstance(header_content, dict):
@@ -167,23 +159,38 @@ class EPDBBackend(object):
         return header_content['epdb']
 
 
+class Base64Backend(EPDBBackend):
+    """A simple unauthenticated backend for local development."""
+
+    def decode_header_value(self, epdb_header):
+        """Pull the encrypted data out of the header, if present.
+
+        :param epdb_header: The content of the ``X-EPDB`` header.
+        :type epdb_header: string
+        :returns: The decoded header payload
+        :rtype: dictionary
+        :raises: EPDBException
+
+        It expects :obj:`epdb_header` to have the ``Base64`` prefix.
+        """
+        try:
+            scheme, payload = epdb_header.split(None, 1)
+        except ValueError:
+            raise EPDBException('Invalid X-EPDB value; must have two tokens')
+
+        if scheme != 'Base64':
+            raise EPDBException('Invalid X-EPDB value; scheme must be Base64')
+
+        decoded_bytes = base64.b64decode(payload.encode())
+        decoded_string = decoded_bytes.decode()
+        return json.loads(decoded_string)
+
+
 class FernetBackend(EPDBBackend):
     """A Python cryptography-based backend that supports a pre-shared key (ie. password) protocol.
 
     :param key: The fernet key used to encrypt the header content
     :type key: bytes
-
-    To generate the request header, one may do something like the following:
-
-    .. code-block:: python
-
-        import json
-        from cryptography.fernet import Fernet
-
-        key = Fernet.generate_key()
-        f = Fernet(key)
-        header_content = f.encrypt(json.dumps({'epdb': {}}).encode()).decode()
-        header_value = 'Fernet {}'.format(header_content)
 
     .. note:: To use this backend, one must install the :mod:`cryptography` package. The easiest
         way to do this is to specify the ``[fernet]`` extra when adding the ``falcon-epdb``
@@ -206,7 +213,7 @@ class FernetBackend(EPDBBackend):
 
         :param epdb_header: The content of the ``X-EPDB`` header.
         :type epdb_header: string
-        :returns: The decoded and decrypt header payload
+        :returns: The decoded and decrypted header payload
         :rtype: dictionary
         :raises: EPDBException
 
@@ -231,17 +238,6 @@ class JWTBackend(EPDBBackend):
     :param key: The JWT key used to encrypt the header content
     :type key: bytes
 
-    To generate the request header, one may do something like the following:
-
-    .. code-block:: python
-
-        import jwt
-        import uuid
-
-        key = uuid.uuid4().hex
-        header_content = jwt.encode({'epdb': {}}, key, algorithm='HS256').decode()
-        header_value = 'JWT {}'.format(header_content)
-
     .. note:: To use this backend, one must install the :mod:`PyJWT` package. The easiest
         way to do this is to specify the ``[jwt]`` extra when adding the ``falcon-epdb``
         dependency to your project.
@@ -265,7 +261,7 @@ class JWTBackend(EPDBBackend):
 
         :param epdb_header: The content of the ``X-EPDB`` header.
         :type epdb_header: string
-        :returns: The decoded and decrypt header payload
+        :returns: The decoded and decrypted header payload
         :rtype: dictionary
         :raises: EPDBException
 

@@ -2,7 +2,7 @@ import pytest
 import falcon
 from falcon.testing import TestClient
 
-from falcon_epdb import EPDBServe, FernetBackend, JWTBackend
+from falcon_epdb import EPDBServe, Base64Backend, FernetBackend, JWTBackend
 
 try:
     from cryptography.fernet import Fernet
@@ -12,6 +12,14 @@ except ImportError:
 @pytest.fixture
 def mock_epdb_serve(mocker):
     return mocker.patch('falcon_epdb.epdb.serve')
+
+
+@pytest.fixture
+def base64_client(fernet_key):
+    epdb_serve = EPDBServe(
+        backend=Base64Backend(),
+        serve_options={'port': 9000})
+    return TestClient(falcon.API(middleware=[epdb_serve]))
 
 
 @pytest.fixture

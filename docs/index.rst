@@ -4,10 +4,12 @@
    contain the root `toctree` directive.
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
+   :name: mastertoc
+   :maxdepth: 4
 
-.. include:: ../README.rst
+   readme
+   api
 
 .. Indices and tables
 .. ==================
