@@ -573,6 +573,14 @@ version = "1.1.0"
 
 [[package]]
 category = "dev"
+description = "A collection of helpers and mock objects for unit tests and doc tests."
+name = "testfixtures"
+optional = false
+python-versions = "*"
+version = "6.5.0"
+
+[[package]]
+category = "dev"
 description = "Type Hints for Python"
 marker = "python_version < \"3.5\""
 name = "typing"
@@ -593,7 +601,7 @@ fernet = ["cryptography"]
 jwt = ["PyJWT"]
 
 [metadata]
-content-hash = "79371284613f4c9a55aac72dc0d82580815ed749c6eff9d55cd6679de0eb86f9"
+content-hash = "fa50a2e1afba7a20efad3740cab927468631f8018aa81ee6e4b2143253f595d9"
 python-versions = "~2.7 || ^3.4"
 
 [metadata.hashes]
@@ -650,5 +658,6 @@ sphinx = ["429e3172466df289f0f742471d7e30ba3ee11f3b5aecd9a840480d03f14bcfe5", "c
 sphinx-rtd-theme = ["02f02a676d6baabb758a20c7a479d58648e0f64f13e07d1b388e9bb2afe86a09", "d0f6bc70f98961145c5b0e26a992829363a197321ba571b31b24ea91879e0c96"]
 sphinxcontrib-websupport = ["68ca7ff70785cbe1e7bccc71a48b5b6d965d79ca50629606c7861a21b206d9dd", "9de47f375baf1ea07cdb3436ff39d7a9c76042c10a769c52353ec46e4e8fc3b9"]
 termcolor = ["1d6d69ce66211143803fbc56652b41d73b4a400a2891d7bf7a1cdf4c02de613b"]
+testfixtures = ["59df1b51118978400d9926d5c1efb295f900ae626a54113323732647e453a80f", "cbd0f095d178de578709bcf4cc6eea896964635d2b41386d1cc7583674809b0e"]
 typing = ["4027c5f6127a6267a435201981ba156de91ad0d1d98e9ddc2aa173453453492d", "57dcf675a99b74d64dacf6fba08fb17cf7e3d5fdff53d4a30ea2a5e7e52543d4", "a4c8473ce11a65999c8f59cb093e70686b6c84c98df58c1dae9b3b196089858a"]
 urllib3 = ["61bf29cada3fc2fbefad4fdf059ea4bd1b4a86d2b6d15e1c7c0b582b9752fe39", "de9529817c93f27c8ccbfead6985011db27bd0ddfcdb2d86f3f663385c6a9c22"]

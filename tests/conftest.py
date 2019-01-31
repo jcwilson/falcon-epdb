@@ -1,3 +1,5 @@
+import base64
+import json
 import pytest
 import falcon
 from falcon.testing import TestClient
@@ -9,9 +11,20 @@ try:
 except ImportError:
     pass
 
+try:
+    import jwt
+except ImportError:
+    pass
+
+
 @pytest.fixture
 def mock_epdb_serve(mocker):
     return mocker.patch('falcon_epdb.epdb.serve')
+
+
+@pytest.fixture
+def base64_header():
+    return base64.b64encode(json.dumps({'epdb': {}}).encode()).decode()
 
 
 @pytest.fixture
@@ -33,6 +46,11 @@ def fernet(fernet_key):
 
 
 @pytest.fixture
+def fernet_header(fernet):
+    return fernet.encrypt(json.dumps({'epdb': {}}).encode()).decode()
+
+
+@pytest.fixture
 def fernet_client(fernet_key):
     epdb_serve = EPDBServe(
         backend=FernetBackend(key=fernet_key),
@@ -43,6 +61,11 @@ def fernet_client(fernet_key):
 @pytest.fixture
 def jwt_key():
     return 'mVk0ZaJdN2akNwLRpxmuuUOTLgB75n5kxB6KZvDwEWo='
+
+
+@pytest.fixture
+def jwt_header(jwt_key):
+    return jwt.encode({'epdb': {}}, jwt_key).decode()
 
 
 @pytest.fixture

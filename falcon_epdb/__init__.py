@@ -11,12 +11,12 @@ import epdb
 
 try:
     from cryptography import fernet
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 try:
     import jwt
-except ImportError:
+except ImportError:  # pragma: no cover
     pass
 
 
@@ -81,9 +81,9 @@ class EPDBServe(object):
             if header_data is not None:
                 logger.debug('Serving epdb with options: %s', self.serve_options)
                 epdb.serve(**self.serve_options)
-        except EPDBException:
+        except EPDBException as exc:
             # Probably got an invalid header value. Don't start the debugger.
-            logger.exception('Attempted, but failed, to serve epdb')
+            logger.exception('Attempted, but failed, to serve epdb: %s', exc)
         except Exception:  # pylint: disable=broad-except
             logger.exception('Unexpected error when processing the X-EPDB header')
 
