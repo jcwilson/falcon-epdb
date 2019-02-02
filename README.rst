@@ -2,14 +2,18 @@
 falcon-epdb
 ###########
 
-|build| |coverage| |docs|
+|pypi| |build| |coverage| |docs| |license|
 
 A `Falcon middleware`__ that wraps the excellent `epdb`_ tool and allows one to connect to a
 running Falcon app and use interactive debugging to step through the code.
 
+Better documentation can be found at `readthedocs`_.
+
 .. _Falcon_middleware: https://falcon.readthedocs.io/en/stable/api/middleware.html
 
 __ Falcon_middleware_
+
+.. _readthedocs: https://falcon-epdb.readthedocs.io
 
 
 ************
@@ -195,14 +199,22 @@ debugging.
 You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to be handled
 correctly. So instead of sending ``X-EPDB``, you would send ``HTTP-X-EPDB``.
 
+.. |pypi| image:: https://badge.fury.io/py/falcon-epdb.svg
+    :target: https://badge.fury.io/py/falcon-epdb
+    :alt: Build version
+
 .. |build| image:: https://travis-ci.org/jcwilson/falcon-epdb.svg?branch=master
   :target: https://travis-ci.org/jcwilson/falcon-epdb
   :alt: Build status
 
-.. |docs| image:: https://readthedocs.org/projects/falcon-epdb/badge/?version=latest
-  :target: https://falcon-epdb.readthedocs.io/en/latest/?badge=latest
-  :alt: Documentation status
-
 .. |coverage| image:: https://coveralls.io/repos/github/jcwilson/falcon-epdb/badge.svg
   :target: https://coveralls.io/github/jcwilson/falcon-epdb
+  :alt: Coverage status
+
+.. |docs| image:: https://readthedocs.org/projects/falcon-epdb/badge/?version=latest
+  :target: https://falcon-epdb.readthedocs.io/en/latest
+  :alt: Documentation status
+
+.. |license| image:: https://img.shields.io/badge/License-BSD%203--Clause-blue.svg
+  :target: https://opensource.org/licenses/BSD-3-Clause
   :alt: Coverage status

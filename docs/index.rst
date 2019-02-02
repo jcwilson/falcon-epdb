@@ -8,8 +8,10 @@
    :name: mastertoc
    :maxdepth: 4
 
-   readme
+   Usage <readme>
    api
+   development
+   changelog
 
 .. Indices and tables
 .. ==================
