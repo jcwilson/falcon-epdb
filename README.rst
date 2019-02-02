@@ -2,7 +2,7 @@
 falcon-epdb
 ###########
 
-|build| |docs|
+|build| |coverage| |docs|
 
 A `Falcon middleware`__ that wraps the excellent `epdb`_ tool and allows one to connect to a
 running Falcon app and use interactive debugging to step through the code.
@@ -197,7 +197,12 @@ correctly. So instead of sending ``X-EPDB``, you would send ``HTTP-X-EPDB``.
 
 .. |build| image:: https://travis-ci.org/jcwilson/falcon-epdb.svg?branch=master
   :target: https://travis-ci.org/jcwilson/falcon-epdb
+  :alt: Build status
 
 .. |docs| image:: https://readthedocs.org/projects/falcon-epdb/badge/?version=latest
   :target: https://falcon-epdb.readthedocs.io/en/latest/?badge=latest
-  :alt: Documentation Status
+  :alt: Documentation status
+
+.. |coverage| image:: https://coveralls.io/repos/github/jcwilson/falcon-epdb/badge.svg
+  :target: https://coveralls.io/github/jcwilson/falcon-epdb
+  :alt: Coverage status
