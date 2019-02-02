@@ -1,18 +1,9 @@
 import base64
 import json
 
-import pytest
 import testfixtures
 
-from falcon_epdb import EPDBException, FernetBackend, JWTBackend
-from falcon.testing import SimpleTestResource
-
-
-@pytest.fixture(autouse=True)
-def base64_app(base64_client):
-    resource = SimpleTestResource(json={})
-    base64_client.app.add_route('/', resource)
-    return base64_client.app
+from falcon_epdb import EPDBException
 
 
 def test_base64_client_activates_epdb_port(base64_client, base64_header, mock_epdb_serve):
@@ -21,6 +12,7 @@ def test_base64_client_activates_epdb_port(base64_client, base64_header, mock_ep
         'X-EPDB': 'Base64 {}'.format(base64_header)
     })
 
+    assert result.status_code == 200
     assert mock_epdb_serve.called
     assert mock_epdb_serve.called_once_with(port=9000)
 

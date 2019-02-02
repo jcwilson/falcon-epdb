@@ -1,21 +1,12 @@
-import json
-
 import pytest
 import testfixtures
 
-from falcon_epdb import EPDBException, JWTBackend
-from falcon.testing import SimpleTestResource
+from falcon_epdb import JWTBackend
 
 
 try:
     # Only run if pyjwt is installed
-    import jwt
-
-    @pytest.fixture(autouse=True)
-    def jwt_app(jwt_client):
-        resource = SimpleTestResource(json={})
-        jwt_client.app.add_route('/', resource)
-        return jwt_client.app
+    import jwt  # NoQA
 
     def test_jwt_client(jwt_key, jwt_client, jwt_header, mock_epdb_serve):
         """Test that we start the server."""
@@ -23,6 +14,7 @@ try:
             'X-EPDB': 'JWT {}'.format(jwt_header)
         })
 
+        assert result.status_code == 200
         assert mock_epdb_serve.called
         assert mock_epdb_serve.called_once_with(port=9000)
 
@@ -72,5 +64,3 @@ try:
 
 except ImportError:
     pass
-
-
