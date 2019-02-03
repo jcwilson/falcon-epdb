@@ -2,7 +2,7 @@
 Development
 ###########
 
-Issues and pull requests are welcome at `github`_. Please be sure to add or update the documentation appropriately along with your code changes.
+Issues and pull requests are welcome at `GitHub`_. Please be sure to add or update the documentation appropriately along with your code changes.
 
 
 ************************
@@ -54,7 +54,7 @@ Use the ``poetry add`` command to add dependencies to the ``pyproject.toml`` fil
 Publishing a new release
 ************************
 
-The project is configured to publish a release anytime a tag is pushed to the github repository and the build succeeds. The tagging convention is ``v<Major>.<minor>.<patch>``, and it should follow `semver`_ conventions. One can bump the version using the `poetry version`__ command.
+The project is configured to publish a release anytime a tag is pushed to the GitHub repository and the build succeeds. The tagging convention is ``v<Major>.<minor>.<patch>``, and it should follow `semver`_ conventions. One can bump the version using the `poetry version`__ command.
 
 When creating a release, ensure the following:
 
@@ -69,7 +69,7 @@ __ Travis_CI_
 
 .. _Travis_CI: https://travis-ci.org/jcwilson/falcon-epdb
 
-.. _github: https://github.com/jcwilson/falcon-epdb
+.. _GitHub: https://github.com/jcwilson/falcon-epdb
 
 .. _tox: https://tox.readthedocs.io
 
