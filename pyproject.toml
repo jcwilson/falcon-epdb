@@ -6,9 +6,14 @@ build-backend = "poetry.masonry.api"
 name = "falcon-epdb"
 version = "1.0.0"
 description = ""
+license = "BSD-3-Clause"
 authors = [
     "Josh Wilson <josh.wilson@fivestars.com>"
 ]
+readme = "README.rst"
+homepage = "https://github.com/jcwilson/falcon-epdb"
+repository = "https://github.com/jcwilson/falcon-epdb"
+documentation = "https://falcon-epdb.readthedocs.io/"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Web Environment",
