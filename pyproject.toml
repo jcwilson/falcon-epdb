@@ -4,8 +4,8 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "falcon-epdb"
-version = "1.0.1"
-description = ""
+version = "1.1.0"
+description = "Interactive debugging for your Falco apps"
 license = "BSD-3-Clause"
 authors = [
     "Josh Wilson <josh.wilson@fivestars.com>"
