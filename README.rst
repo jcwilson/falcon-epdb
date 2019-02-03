@@ -2,7 +2,7 @@
 falcon-epdb
 ###########
 
-|pypi| |src| |build| |coverage| |docs| |license|
+|pypi| |src| |build| |coverage| |docs| |license| |black|
 
 A `Falcon middleware`__ that wraps the excellent `epdb`_ tool and allows one to connect to a running Falcon app and use interactive debugging to step through the code.
 
@@ -24,7 +24,7 @@ __ jcwilson_falcon_epdb_
 ************
 Installation
 ************
-If you are only planning on debugging in a development environment where access to your service is restricted to you or trusted partners, you may find the `Base64`_ sufficient to your purposes. You can just install the library as you would any Python library.
+If you are only planning on debugging in a development environment where access to your service is restricted to you or trusted partners, you may find the `Base64`_ backend sufficient to your purposes. You can just install the library as you would any Python library.
 
 .. code-block:: text
   :caption: **requirements.txt**
@@ -202,3 +202,7 @@ You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to
 .. |src| image:: https://img.shields.io/badge/src-github-blue.svg
   :target: https://github.com/jcwilson/falcon-epdb
   :alt: Source code
+
+.. |black| image:: https://img.shields.io/badge/code%20format-black-black.svg
+  :target: https://pypi.org/project/black/
+  :alt: Black code formatter

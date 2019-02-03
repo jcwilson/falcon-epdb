@@ -4,7 +4,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "falcon-epdb"
-version = "1.0.0"
+version = "1.0.1"
 description = ""
 license = "BSD-3-Clause"
 authors = [
@@ -38,7 +38,6 @@ python = "~2.7 || ^3.4"
 epdb = "^0.15.1"
 cryptography = {version = "^2.5",optional = true}
 PyJWT = {version = "^1.7",optional = true}
-# Update requirement-docs.txt when modifying this list
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
@@ -55,3 +54,6 @@ testfixtures = "^6.5"
 [tool.poetry.extras]
 fernet = ["cryptography"]
 jwt = ["PyJWT"]
+
+[tool.black]
+line-length = 100

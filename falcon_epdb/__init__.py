@@ -1,7 +1,5 @@
 """Remote debugging support for Falcon apps."""
 
-__version__ = '0.1.0'
-
 import base64
 import json
 from abc import ABCMeta, abstractmethod
@@ -25,6 +23,7 @@ logger = getLogger(__name__)
 
 class EPDBException(Exception):
     """Raised when an error occurs during the processing of an ``X-EPDB`` header."""
+
     # pylint: disable=too-few-public-methods
 
 
@@ -55,7 +54,7 @@ class EPDBServe(object):
     .. _epdb: https://pypi.org/project/epdb/
     """
 
-    def __init__(self, backend, exempt_methods=('OPTIONS',), serve_options=None):
+    def __init__(self, backend, exempt_methods=("OPTIONS",), serve_options=None):
         serve_options = serve_options or {}
         self.backend = backend
         self.exempt_methods = exempt_methods
@@ -79,13 +78,13 @@ class EPDBServe(object):
         try:
             header_data = self.backend.get_header_data(req)
             if header_data is not None:
-                logger.debug('Serving epdb with options: %s', self.serve_options)
+                logger.debug("Serving epdb with options: %s", self.serve_options)
                 epdb.serve(**self.serve_options)
         except EPDBException as exc:
             # Probably got an invalid header value. Don't start the debugger.
-            logger.exception('Attempted, but failed, to serve epdb: %s', exc)
+            logger.exception("Attempted, but failed, to serve epdb: %s", exc)
         except Exception:  # pylint: disable=broad-except
-            logger.exception('Unexpected error when processing the X-EPDB header')
+            logger.exception("Unexpected error when processing the X-EPDB header")
 
 
 class EPDBBackend(object):
@@ -111,9 +110,9 @@ class EPDBBackend(object):
         If the request does not appear to be attempting begin a debugging session, this will
         return :obj:`None`.
         """
-        epdb_header = req.headers.get('X-EPDB')
+        epdb_header = req.headers.get("X-EPDB")
         if epdb_header:
-            logger.debug('Found epdb header')
+            logger.debug("Found epdb header")
             header_content = self.decode_header_value(epdb_header)
             return self.validate_header_content(header_content)
         return None
@@ -148,15 +147,15 @@ class EPDBBackend(object):
             }
         """
         if not isinstance(header_content, dict):
-            raise EPDBException('Invalid X-EPDB content; must be a dictionary')
+            raise EPDBException("Invalid X-EPDB content; must be a dictionary")
 
-        if 'epdb' not in header_content:
+        if "epdb" not in header_content:
             raise EPDBException('Invalid X-EPDB content; must contain key named "epdb"')
 
-        if not isinstance(header_content['epdb'], dict):
+        if not isinstance(header_content["epdb"], dict):
             raise EPDBException('Invalid X-EPDB content; "epdb" key must map to a dictionary')
 
-        return header_content['epdb']
+        return header_content["epdb"]
 
 
 class Base64Backend(EPDBBackend):
@@ -176,10 +175,10 @@ class Base64Backend(EPDBBackend):
         try:
             scheme, payload = epdb_header.split(None, 1)
         except ValueError:
-            raise EPDBException('Invalid X-EPDB value; must have two tokens')
+            raise EPDBException("Invalid X-EPDB value; must have two tokens")
 
-        if scheme != 'Base64':
-            raise EPDBException('Invalid X-EPDB value; scheme must be Base64')
+        if scheme != "Base64":
+            raise EPDBException("Invalid X-EPDB value; scheme must be Base64")
 
         decoded_bytes = base64.b64decode(payload.encode())
         decoded_string = decoded_bytes.decode()
@@ -206,7 +205,7 @@ class FernetBackend(EPDBBackend):
         try:
             self.fernet = fernet.Fernet(key)
         except NameError:
-            raise ImportError('Missing optional [fernet] dependency')
+            raise ImportError("Missing optional [fernet] dependency")
 
     def decode_header_value(self, epdb_header):
         """Pull the encrypted data out of the header, if present.
@@ -222,10 +221,10 @@ class FernetBackend(EPDBBackend):
         try:
             scheme, payload = epdb_header.split(None, 1)
         except ValueError:
-            raise EPDBException('Invalid X-EPDB value; must have two tokens')
+            raise EPDBException("Invalid X-EPDB value; must have two tokens")
 
-        if scheme != 'Fernet':
-            raise EPDBException('Invalid X-EPDB value; scheme must be Fernet')
+        if scheme != "Fernet":
+            raise EPDBException("Invalid X-EPDB value; scheme must be Fernet")
 
         decrypted_bytes = self.fernet.decrypt(payload.encode())
         decrypted_string = decrypted_bytes.decode()
@@ -252,7 +251,7 @@ class JWTBackend(EPDBBackend):
         try:
             jwt
         except NameError:
-            raise ImportError('Missing optional [jwt] dependency')
+            raise ImportError("Missing optional [jwt] dependency")
 
         self.key = key
 
@@ -270,9 +269,9 @@ class JWTBackend(EPDBBackend):
         try:
             scheme, payload = epdb_header.split(None, 1)
         except ValueError:
-            raise EPDBException('Invalid X-EPDB value; must have two tokens')
+            raise EPDBException("Invalid X-EPDB value; must have two tokens")
 
-        if scheme != 'JWT':
-            raise EPDBException('Invalid X-EPDB value; scheme must be JWT')
+        if scheme != "JWT":
+            raise EPDBException("Invalid X-EPDB value; scheme must be JWT")
 
-        return jwt.decode(payload.encode(), self.key, algorithms='HS256')
+        return jwt.decode(payload.encode(), self.key, algorithms="HS256")
