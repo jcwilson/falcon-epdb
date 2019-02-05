@@ -26,35 +26,41 @@ Installation
 ************
 If you are only planning on debugging in a development environment where access to your service is restricted to you or trusted partners, you may find the `Base64`_ backend sufficient to your purposes. You can just install the library as you would any Python library.
 
+**requirements.txt**
+
 .. code-block:: text
-  :caption: **requirements.txt**
 
   falcon-epdb
 
+**pip**
+
 .. code-block:: bash
-  :caption: **pip**
 
   pip install falcon-epdb
 
+**poetry**
+
 .. code-block:: bash
-  :caption: **poetry**
 
   poetry add falcon-epdb
 
 However, if you need a little more security, you can use one of the other authenticated backends (`Fernet`_, `JWT`_). Choose the one that best fits your use case and install it as a Python `extra`_.
 
+**requirements.txt**
+
 .. code-block:: text
-  :caption: **requirements.txt**
 
   falcon-epdb[fernet]
 
+**pip**
+
 .. code-block:: bash
-  :caption: **pip**
 
   pip install falcon-epdb[fernet, jwt]
 
+**poetry**
+
 .. code-block:: bash
-  :caption: **poetry**
 
   poetry add falcon-epdb[jwt]
 
@@ -65,13 +71,13 @@ However, if you need a little more security, you can use one of the other authen
 Usage
 *****
 
-This library adds a middleware to your Falcon API stack, and as such will run for all requests, save those excluded by ``exempt_methods`` provided to the :class:`EPDBServer<falcon_epdb.EPDBServer>` constructor. If it detects a well-formed (and possibly authenticated) ``X-EPDB`` header on the request it will start the `epdb`_ server on the configured port and block until it establishes a connection from an `epdb`_ client, at which point processing continues but under the control of the remote debugging session.
+This library adds a middleware to your Falcon API stack, and as such will run for all requests, save those excluded by ``exempt_methods`` provided to the ``EPDBServer`` constructor. If it detects a well-formed (and possibly authenticated) ``X-EPDB`` header on the request it will start the `epdb`_ server on the configured port and block until it establishes a connection from an `epdb`_ client, at which point processing continues but under the control of the remote debugging session.
 
 Subsequent requests with an acceptable header will reuse the client connection and automatically drop into the remote debugging session again.
 
 Configuring the middleware
 ==========================
-The :class:`EPDBServe<falcon_epdb.EPDBServe>` middleware accepts a handful of parameters. The most important are the ``backend`` and ``serve_options`` parameters. The ``backend`` determines how a request is examined for the "secret knock" to start the remote debugging server. The included implementations assume a well-formed ``X-EPDB`` header, but nothing precludes you from sub-classing :class:`EPDBBackend<falcon_epdb.EPDBBackend>` and implementing your own.
+The ``EPDBServe<falcon_epdb.EPDBServe>`` middleware accepts a handful of parameters. The most important are the ``backend`` and ``serve_options`` parameters. The ``backend`` determines how a request is examined for the "secret knock" to start the remote debugging server. The included implementations assume a well-formed ``X-EPDB`` header, but nothing precludes you from sub-classing ``EPDBBackend<falcon_epdb.EPDBBackend>`` and implementing your own.
 
 The ``serve_options`` are options that are passed through to the ``epdb.serve()`` call. See `Backends`_ for details on how to add this middleware to your API.
 
@@ -110,16 +116,18 @@ Backends
 
 Base64
 ------
+**Server side configuration**
+
 .. code-block:: python
-  :caption: **Server side configuration**
 
   epdb_middleware = EPDBServe(
       backend=Base64Backend(),
       serve_options={'port': 9000})
   api = falcon.API(middleware=[epdb_middleware])
 
+**Crafting an appropriate header**
+
 .. code-block:: python
-  :caption: **Crafting an appropriate header**
 
   import base64
   import json
@@ -129,8 +137,9 @@ Base64
 
 Fernet
 ------
+**Server side configuration**
+
 .. code-block:: python
-  :caption: **Server side configuration**
 
   fernet_key = Fernet.generate_key()  # The shared key
   epdb_middleware = EPDBServe(
@@ -138,8 +147,9 @@ Fernet
       serve_options={'port': 9000})
   api = falcon.API(middleware=[epdb_middleware])
 
+**Crafting an appropriate header**
+
 .. code-block:: python
-  :caption: **Crafting an appropriate header**
 
   import json
   from cryptography.fernet import Fernet
@@ -150,8 +160,9 @@ Fernet
 
 JWT
 ------
+**Server side configuration**
+
 .. code-block:: python
-  :caption: **Server side configuration**
 
   jwt_key = uuid.uuid4().hex  # The shared key
   epdb_middleware = EPDBServe(
@@ -159,8 +170,9 @@ JWT
       serve_options={'port': 9000})
   api = falcon.API(middleware=[epdb_middleware])
 
+**Crafting an appropriate header**
+
 .. code-block:: python
-  :caption: **Crafting an appropriate header**
 
   import jwt
 

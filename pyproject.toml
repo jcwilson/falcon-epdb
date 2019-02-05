@@ -50,6 +50,7 @@ pytest-cov = "^2.6"
 pydocstyle = "^3.0"
 flake8 = "^3.7"
 testfixtures = "^6.5"
+twine = "^1.12"
 
 [tool.poetry.extras]
 fernet = ["cryptography"]
