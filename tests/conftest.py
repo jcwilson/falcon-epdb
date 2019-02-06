@@ -1,4 +1,5 @@
 """Fixtures for falcon_epdb tests."""
+# pylint: disable=redefined-outer-name
 
 import base64
 import json

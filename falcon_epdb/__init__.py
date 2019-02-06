@@ -77,14 +77,26 @@ class EPDBServe(object):
 
         try:
             header_data = self.backend.get_header_data(req)
-            if header_data is not None:
-                logger.debug("Serving epdb with options: %s", self.serve_options)
-                epdb.serve(**self.serve_options)
         except EPDBException as exc:
             # Probably got an invalid header value. Don't start the debugger.
             logger.exception("Attempted, but failed, to serve epdb: %s", exc)
+            return
         except Exception:  # pylint: disable=broad-except
-            logger.exception("Unexpected error when processing the X-EPDB header")
+            logger.exception(
+                "Attempted, but failed, to serve epdb:"
+                " Unexpected error when processing the X-EPDB header"
+            )
+            return
+
+        try:
+            if header_data is not None:
+                logger.debug("Serving epdb with options: %s", self.serve_options)
+                epdb.serve(**self.serve_options)
+        except Exception:  # pylint: disable=broad-except
+            logger.exception(
+                "Attempted, but failed, to serve epdb:"
+                " Unexpected error when starting epdb server"
+            )
 
 
 class EPDBBackend(object):
@@ -173,7 +185,7 @@ class Base64Backend(EPDBBackend):
         It expects :obj:`epdb_header` to have the ``Base64`` prefix.
         """
         try:
-            scheme, payload = epdb_header.split(None, 1)
+            scheme, payload = epdb_header.split()
         except ValueError:
             raise EPDBException("Invalid X-EPDB value; must have two tokens")
 
