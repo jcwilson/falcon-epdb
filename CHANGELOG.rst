@@ -2,6 +2,17 @@
 Changelog
 #########
 
+*******
+v<next>
+*******
+
+Expand pylint and black scopes
+==============================
+* Apply pylint and black checks to the ``tests/`` directory
+* Emit a more precise error message when the ``epdb.serve()`` command fails.
+* Add pyversions badge to the README
+
+
 ******
 v1.1.1
 ******
@@ -11,6 +22,7 @@ Fix PyPI documentation
 * Removed some sphinx extension markup that broke the PyPI readme render
 * Added a step to the documentation tests to ensure it doesn't happen in the
   future
+
 
 ******
 v1.1.0

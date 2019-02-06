@@ -2,7 +2,7 @@
 falcon-epdb
 ###########
 
-|pypi| |src| |build| |coverage| |docs| |license| |black|
+|pypi| |build| |coverage| |src| |docs| |pyversions| |license| |black|
 
 A `Falcon middleware`__ that wraps the excellent `epdb`_ tool and allows one to connect to a running Falcon app and use interactive debugging to step through the code.
 
@@ -191,8 +191,8 @@ Be sure to up your request timeout limit to something on the order of minutes so
 
 You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to be handled correctly. So instead of sending ``X-EPDB``, you would send ``HTTP-X-EPDB``.
 
-.. |pypi| image:: https://badge.fury.io/py/falcon-epdb.svg
-    :target: https://badge.fury.io/py/falcon-epdb
+.. |pypi| image:: https://img.shields.io/pypi/v/falcon-epdb.svg
+    :target: https://pypi.org/project/falcon-epdb/
     :alt: Build version
 
 .. |build| image:: https://travis-ci.org/jcwilson/falcon-epdb.svg?branch=master
@@ -203,17 +203,21 @@ You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to
   :target: https://coveralls.io/github/jcwilson/falcon-epdb
   :alt: Coverage status
 
+.. |src| image:: https://img.shields.io/badge/src-github-blue.svg
+  :target: https://github.com/jcwilson/falcon-epdb
+  :alt: Source code
+
 .. |docs| image:: https://readthedocs.org/projects/falcon-epdb/badge/?version=latest
   :target: https://falcon-epdb.readthedocs.io/en/latest
   :alt: Documentation status
 
-.. |license| image:: https://img.shields.io/badge/License-BSD%203--Clause-blue.svg
-  :target: https://opensource.org/licenses/BSD-3-Clause
-  :alt: Coverage status
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/falcon-epdb.svg
+    :target: https://pypi.org/project/falcon-epdb/
+    :alt: Supported Python versions
 
-.. |src| image:: https://img.shields.io/badge/src-github-blue.svg
-  :target: https://github.com/jcwilson/falcon-epdb
-  :alt: Source code
+.. |license| image:: https://img.shields.io/pypi/l/falcon-epdb.svg
+    :target: https://opensource.org/licenses/BSD-3-Clause
+    :alt: Build version
 
 .. |black| image:: https://img.shields.io/badge/code%20format-black-black.svg
   :target: https://pypi.org/project/black/
