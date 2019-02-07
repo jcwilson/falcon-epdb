@@ -3,7 +3,7 @@ Changelog
 #########
 
 *******
-v<next>
+v1.1.2
 *******
 
 Expand pylint and black scopes

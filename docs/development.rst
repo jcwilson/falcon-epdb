@@ -106,7 +106,7 @@ When creating a release, ensure the following:
 
   - The documentation is up to date with the new changes.
   - The changes have been noted in the CHANGELOG.rst.
-  - The build "badges" are all passing. The readthedocs one seems somewhat finicky these days.
+  - The build "badges" are all passing.
   - The version has been incremented accordingly.
 
 
