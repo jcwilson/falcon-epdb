@@ -2,7 +2,7 @@
 falcon-epdb
 ###########
 
-|pypi| |build| |coverage| |src| |docs| |pyversions| |license| |black|
+|pypi| |pyversions| |src| |build| |coverage| |docs| |license| |black|
 
 A `Falcon middleware`__ that wraps the excellent `epdb`_ tool and allows one to connect to a running Falcon app and use interactive debugging to step through the code.
 
@@ -195,6 +195,14 @@ You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to
     :target: https://pypi.org/project/falcon-epdb/
     :alt: Build version
 
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/falcon-epdb.svg
+    :target: https://pypi.org/project/falcon-epdb/
+    :alt: Supported Python versions
+
+.. |src| image:: https://img.shields.io/badge/src-github-blue.svg
+  :target: https://github.com/jcwilson/falcon-epdb
+  :alt: Source code
+
 .. |build| image:: https://travis-ci.org/jcwilson/falcon-epdb.svg?branch=master
   :target: https://travis-ci.org/jcwilson/falcon-epdb
   :alt: Build status
@@ -203,17 +211,9 @@ You may need to provide the ``HTTP-`` prefix on your ``X-EPDB`` header for it to
   :target: https://coveralls.io/github/jcwilson/falcon-epdb
   :alt: Coverage status
 
-.. |src| image:: https://img.shields.io/badge/src-github-blue.svg
-  :target: https://github.com/jcwilson/falcon-epdb
-  :alt: Source code
-
 .. |docs| image:: https://readthedocs.org/projects/falcon-epdb/badge/?version=latest
   :target: https://falcon-epdb.readthedocs.io/en/latest
   :alt: Documentation status
-
-.. |pyversions| image:: https://img.shields.io/pypi/pyversions/falcon-epdb.svg
-    :target: https://pypi.org/project/falcon-epdb/
-    :alt: Supported Python versions
 
 .. |license| image:: https://img.shields.io/pypi/l/falcon-epdb.svg
     :target: https://opensource.org/licenses/BSD-3-Clause

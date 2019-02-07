@@ -3,6 +3,16 @@ Changelog
 #########
 
 *******
+v1.1.3
+*******
+
+Update docs and readme
+==============================
+* Hide the toctree content and include the readme page on index.rst
+* Reorder the badges to group by color(purpose)
+
+
+*******
 v1.1.2
 *******
 
