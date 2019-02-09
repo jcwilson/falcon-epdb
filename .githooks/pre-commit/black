@@ -1,0 +1,41 @@
+#! /usr/bin/env bash
+
+# Git hook to ensure code conforms to black format.
+# This will modify files staged for the commit prior to creating
+# the commit. It will prompt you to apply the changes and add
+# each change individually so as to avoid accidentally commiting
+# unwanted changes.
+
+# To enable, install and enable the git-hooks tool:
+#   https://github.com/fivestars/git-hooks
+
+
+# Get some core helper functions
+. "${GIT_HOOKS_LIB}/core.sh" "${GIT_HOOKS_LIB}"
+
+# Only do this check on new and --amend commits, not merges, rebases or cherry-picks.
+if commit_in_progress; then
+    # See if there are any fixes that need to be made
+    if ! git diff --name-only --cached -z falcon_epdb tests | xargs -0 -I {} bash -c "git show :{} | poetry run black --check --quiet -"; then
+        printf "${c_prompt}%s${c_reset}" "Format changes required, apply changes now? (Y/n): "
+
+        # Let the author decide to update the code during the commit process
+        read -r response
+        case $response in
+            ''|Y|y|Yes|yes)
+                # Do the update
+                poetry run black --quiet $(git diff --name-only --cached falcon_epdb tests) ;
+
+                # Add each change piecemeal, since the author may have
+                # unstaged changes in the affected files that they do not
+                # wish to include in the commit.
+                git add -p $(git diff --name-only --cached falcon_epdb tests) ;
+                ;;
+        esac
+
+        # If the changes are not applied, the commit will fail
+        git diff --name-only --cached -z falcon_epdb tests | xargs -0 -n 1 -I {} bash -c "git show :{} | poetry run black --check --quiet -"
+    fi
+else
+    printf "${c_action}%s${c_reset}\\n" "Not a new commit, nothing to be done"
+fi

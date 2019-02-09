@@ -51,6 +51,12 @@ Tools
 -----
 This project uses several tools to ensure quality and consistency.
 
+git-hooks (optional, but recommended)
+.....................................
+`git-hooks`__ instructs git to look in the src-controlled ``.githooks/`` directory for any git hook scripts. We use it to automatically apply the `black`_ formatter during the ``pre-commit`` checks.
+
+The ``git-hooks`` tool offers other functionality such as global hooks, running individual hooks manually and piecemeal disabling of hooks. It's worth checking out for your other projects, too. *Full disclosure, I'm also the author of that tool.*
+
 black
 .....
 
@@ -114,6 +120,10 @@ When creating a release, ensure the following:
 __ Travis_CI_
 
 .. _Travis_CI: https://travis-ci.org/jcwilson/falcon-epdb
+
+__ git_hooks_
+
+.. _git_hooks: https://github.com/fivestars/git-hooks
 
 __ opinionated_code_formatter_
 

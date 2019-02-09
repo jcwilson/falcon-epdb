@@ -6,8 +6,9 @@ Changelog
 v1.1.3
 *******
 
-Update docs and readme
-==============================
+Add pre-commit hook; update docs and readme
+===========================================
+* Add a pre-commit git hook to auto-apply black formatting rules
 * Hide the toctree content and include the readme page on index.rst
 * Reorder the badges to group by color(purpose)
 
